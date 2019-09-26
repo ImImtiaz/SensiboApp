@@ -46,7 +46,8 @@ JobCard.propTypes =
 {
     customer: PropTypes.string,
     address: PropTypes.string, 
-    phone: PropTypes.number,
+    address1: PropTypes.string, 
+    phone: PropTypes.string,
     subscription: PropTypes.string,
     time: PropTypes.string, 
     status: PropTypes.string
@@ -56,7 +57,8 @@ JobCard.defaultProps =
 {
     customer: "ABC",
     address: "22 Gilman St", 
-    phone: 1234567,
+    address1: "", 
+    phone: "1234567",
     subscription: "DR-000169",
     time: "14:10", 
     status: "Success"

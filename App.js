@@ -7,6 +7,7 @@ import * as Font from 'expo-font';
 import HomeScreen from './Screens/HomeScreen';
 import JobsScreen from './Screens/JobsScreen';
 import UpComingJobs from './Screens/UpComingJobsScreen';
+import JobSheet from './Screens/JobSheetScreen'
 
 const MyDrawerNavigator = new DrawerNavigator(
   {
@@ -17,7 +18,7 @@ const MyDrawerNavigator = new DrawerNavigator(
     UpcomingJobs: UpComingJobs
   },
   {
-    initialRouteName: 'Jobs',
+    initialRouteName: 'Home',
   },
   {
     drawerBackgroundColor: 'rgba(255,255,255,.9)',

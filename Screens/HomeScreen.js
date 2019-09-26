@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, ActivityIndicator, FlatList } from 'react-native';
+import { Text, View, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Content, Container, Header, Left, Body, Button, Icon, Title } from 'native-base'
+
 import PropTypes from 'prop-types';
 
 import JobCard from '../Components/JobCard'
 //import CustomHeader from '../Components/Header'
+
+const userId = 11833;
 
 export default class HomeScreen extends Component {
     constructor(props){
@@ -12,8 +15,10 @@ export default class HomeScreen extends Component {
         this.state ={ isLoading: true}
     }
 
+    
+
     componentDidMount(){
-        return fetch('https://10.0.2.2:5000/api/getJob/11833')
+        return fetch('http://192.168.101.198:5000/api/gettodayJob/'+userId)
           .then((response) => response.json())
           .then((responseJson) => {
     
@@ -34,15 +39,16 @@ export default class HomeScreen extends Component {
 
         if(this.state.isLoading){
             return(
-              <View style={{flex: 1, padding: 20}}>
-                <ActivityIndicator/>
+              <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                <ActivityIndicator size="large" color="#1976d2" />
               </View>
             )
           }
 
         return (
-            <Container style={{marginTop: 24}}>
-                <Header>
+            
+            <Container style={{marginTop: 25, backgroundColor: '#eeeeee'}}>
+                <Header style={{backgroundColor: '#1976d2'}}>
                 <Left>
                     <Button transparent>                    
                     <TouchableOpacity
@@ -52,22 +58,30 @@ export default class HomeScreen extends Component {
                     </Button>
                 </Left>
                 <Body>
-                    <Title>Dashboard</Title>
+                    <Title>Today's Job</Title>
                 </Body>
                 </Header>
 
 
-                <FlatList
-          data={this.state.dataSource}
-          renderItem={({item}) => <Text>{item.CustomerName}, {item.SubscriptionID}</Text>}
-          keyExtractor={({id}, index) => id}
-        />
-
+                
                 <Content padder>
+                {this.state.dataSource.map((item) =>
+
+                    <JobCard customer={item.CustomerName} address={item.cAddress1} address1={item.cAddress2} phone={item.cPrimaryPhone} subscription={item.SubscriptionID} time={item.JobStartTime.substring(11, 16)} status={item.JobStatus} />
+                
+                )}
+                </Content>
+
+                {/* <Content padder>
                 <JobCard customer='Linda Betz' address='70 Mirranda Ct, Willington' phone={12345678} subscription='DR-000186' time='15:00' status='Success' />
                 <JobCard />
                 <JobCard />
-                </Content>
+                </Content> */}
+
+{/* <Button
+    title="Update the title"
+    onPress={() => this.props.navigation.setParams({otherParam: 'Updated!'})}
+  /> */}
 
             </Container>
         )
@@ -88,7 +102,8 @@ JobCard.propTypes =
 {
     customer: PropTypes.string,
     address: PropTypes.string, 
-    phone: PropTypes.number,
+    address1: PropTypes.string, 
+    phone: PropTypes.string,
     subscription: PropTypes.string,
     time: PropTypes.string, 
     status: PropTypes.string
@@ -96,10 +111,11 @@ JobCard.propTypes =
  
 JobCard.defaultProps =
 {
-    customer: "ABC",
-    address: "22 Gilman St", 
-    phone: 1234567,
-    subscription: "DR-000169",
-    time: "14:10", 
-    status: "Success"
+    customer: "Not Specified",
+    address: "Not given", 
+    address1: "", 
+    phone: "",
+    subscription: "",
+    time: "", 
+    status: "Undefined"
 }
